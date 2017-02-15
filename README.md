@@ -1,14 +1,49 @@
-# duct.logger.timbre
+# logger.timbre
 
-A Clojure library designed to ... well, that part is up to you.
+Integrant multimethods for setting up a [Timbre][] loggier for the
+[Duct][] framework.
+
+[timbre]: https://github.com/ptaoussanis/timbre
+[duct]: https://github.com/duct-framework/duct
+
+## Installation
+
+To install, add the following to your project `:dependencies`:
+
+    [duct/logger.timbre "0.1.0-SNAPSHOT"]
 
 ## Usage
 
-FIXME
+The Timbre configuration is stored in the `:duct.logger/timbre`
+key. See the [configuration][] section of the Timbre README for full
+explanation.
+
+Two additional keys are defined that reference core Timbre logging
+appenders:
+
+* `:duct.logger.timbre/println`
+* `:duct.logger.timbre/spit`
+
+See the [built-in appenders][] section of the Timbre README.
+
+A basic configuration that logs messages of "INFO" and above to STDOUT
+looks like this:
+
+```clojure
+{:duct.logger/timbre
+ {:level    :info
+  :appender #ref :duct.logger.timbre/println}
+
+ :duct.logger.timbre/println
+ {:stream :auto}}
+```
+
+[configuration]: https://github.com/ptaoussanis/timbre/blob/master/README.md#configuration
+[built-in appenders]: https://github.com/ptaoussanis/timbre/blob/master/README.md#built-in-appenders
 
 ## License
 
-Copyright © 2017 FIXME
+Copyright © 2017 James Reeves
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
