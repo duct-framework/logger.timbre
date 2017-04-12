@@ -3,11 +3,21 @@
             [integrant.core :as ig]
             [taoensso.timbre :as timbre]))
 
+(defn brief-output-fn [{:keys [msg_]}]
+  (force msg_))
+
+(defn brief-appender [options]
+  (-> (timbre/println-appender options)
+      (assoc :output-fn brief-output-fn)))
+
 (defmethod ig/init-key ::println [_ options]
   (timbre/println-appender options))
 
 (defmethod ig/init-key ::spit [_ options]
   (timbre/spit-appender options))
+
+(defmethod ig/init-key ::brief [_ options]
+  (brief-appender options))
 
 (derive :duct.logger/timbre :duct/logger)
 
