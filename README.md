@@ -1,6 +1,6 @@
 # Duct logger.timbre
 
-Integrant multimethods for setting up a [Timbre][] loggier for the
+Integrant multimethods for setting up a [Timbre][] logger for the
 [Duct][] framework.
 
 [timbre]: https://github.com/ptaoussanis/timbre
