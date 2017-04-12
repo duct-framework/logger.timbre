@@ -6,4 +6,4 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [com.taoensso/timbre "4.8.0"]
                  [duct/core "0.9.0-SNAPSHOT"]
-                 [integrant "0.2.1"]])
+                 [integrant "0.3.3"]])
