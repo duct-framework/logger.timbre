@@ -18,12 +18,18 @@ The Timbre configuration is stored in the `:duct.logger/timbre`
 key. See the [configuration][] section of the Timbre README for full
 explanation.
 
-Two additional keys are defined that reference core Timbre logging
+Three additional keys are defined that reference core Timbre logging
 appenders:
 
+* `:duct.logger.timbre/brief`
 * `:duct.logger.timbre/println`
 * `:duct.logger.timbre/spit`
 
+The brief appender prints to STDOUT only the log message without
+timestamp or any other information. It's most useful during
+development.
+
+The println and spit appenders are appenders that come with Timbre.
 See the [built-in appenders][] section of the Timbre README.
 
 A basic configuration that logs messages of "INFO" and above to STDOUT
@@ -34,8 +40,7 @@ looks like this:
  {:level    :info
   :appender #ref :duct.logger.timbre/println}
 
- :duct.logger.timbre/println
- {:stream :auto}}
+ :duct.logger.timbre/println {}}
 ```
 
 [configuration]: https://github.com/ptaoussanis/timbre/blob/master/README.md#configuration
