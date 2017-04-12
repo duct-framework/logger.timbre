@@ -43,8 +43,14 @@ looks like this:
  :duct.logger.timbre/println {}}
 ```
 
+When this configuration is initiated with `integrant.core/init`, the
+`:duct.logger/timbre` key is replaced with an implementation of the
+`duct.logger/Logger` protocol. See the [duct.logger][] library for how
+to make use of this.
+
 [configuration]: https://github.com/ptaoussanis/timbre/blob/master/README.md#configuration
 [built-in appenders]: https://github.com/ptaoussanis/timbre/blob/master/README.md#built-in-appenders
+[duct.logger]: https://github.com/duct-framework/logger
 
 ## License
 
