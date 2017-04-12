@@ -5,5 +5,5 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [com.taoensso/timbre "4.8.0"]
-                 [duct/core "0.9.0-SNAPSHOT"]
+                 [duct/logger "0.1.1"]
                  [integrant "0.3.3"]])

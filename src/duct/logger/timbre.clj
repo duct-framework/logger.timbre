@@ -1,5 +1,5 @@
 (ns duct.logger.timbre
-  (:require [duct.core.protocols :as p]
+  (:require [duct.logger :as logger]
             [integrant.core :as ig]
             [taoensso.timbre :as timbre]))
 
@@ -22,7 +22,7 @@
 (derive :duct.logger/timbre :duct/logger)
 
 (defrecord TimbreLogger [config]
-  p/Logger
+  logger/Logger
   (-log [_ level ns-str file line event data]
     (cond
       (instance? Throwable data)
