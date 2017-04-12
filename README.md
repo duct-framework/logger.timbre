@@ -1,4 +1,4 @@
-# logger.timbre
+# Duct logger.timbre
 
 Integrant multimethods for setting up a [Timbre][] loggier for the
 [Duct][] framework.
