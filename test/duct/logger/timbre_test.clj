@@ -1,7 +1,7 @@
 (ns duct.logger.timbre-test
   (:require [clojure.test :refer :all]
-            [duct.logger.timbre :refer :all]))
+            [duct.logger :as logger]
+            duct.logger.timbre))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(deftest key-test
+  (is (isa? :duct.logger/timbre :duct/logger)))
