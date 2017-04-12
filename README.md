@@ -1,5 +1,7 @@
 # Duct logger.timbre
 
+[![Build Status](https://travis-ci.org/duct-framework/logger.timbre.svg?branch=master)](https://travis-ci.org/duct-framework/logger.timbre)
+
 Integrant multimethods for setting up a [Timbre][] logger for the
 [Duct][] framework.
 
