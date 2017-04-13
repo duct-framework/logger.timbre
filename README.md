@@ -12,7 +12,7 @@ Integrant multimethods for setting up a [Timbre][] logger for the
 
 To install, add the following to your project `:dependencies`:
 
-    [duct/logger.timbre "0.1.0-SNAPSHOT"]
+    [duct/logger.timbre "0.1.0"]
 
 ## Usage
 
