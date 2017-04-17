@@ -48,3 +48,37 @@
            WARN\ \[duct\.logger\.timbre-test:40\]\ -\ 
            :duct\.logger\.timbre-test/testing\ \{:foo\ \"bar\"\}\n"
          (slurp tempfile)))))
+
+(deftest min-level-test
+  (testing "brief appender"
+    (let [config {::logger/timbre {:level :info, :appenders {:brief (ig/ref ::timbre/brief)}}
+                  ::timbre/brief  {:min-level :report}}
+          logger (::logger/timbre (ig/init config))]
+      (is (= (with-out-str (logger/log logger :info ::testing)) ""))
+      (is (= (with-out-str (logger/log logger :report ::testing))
+             ":duct.logger.timbre-test/testing\n"))))
+
+  (testing "println appender"
+    (let [config {::logger/timbre  {:level :info, :appenders {:prn (ig/ref ::timbre/println)}}
+                  ::timbre/println {:min-level :report}}
+          logger (::logger/timbre (ig/init config))]
+      (is (= (with-out-str (logger/log logger :info ::testing)) ""))
+      (is (re-matches
+           #"(?x)\d\d-\d\d-\d\d\ \d\d:\d\d:\d\d\ [^\s]+\ 
+           REPORT\ \[duct\.logger\.timbre-test:70\]\ -\ 
+           :duct\.logger\.timbre-test/testing\n"
+           (with-out-str (logger/log logger :report ::testing))))))
+
+  (testing "spit appender"
+    (let [tempfile (doto (java.io.File/createTempFile "timbre" "log") (.deleteOnExit))
+          config   {::logger/timbre {:level :info, :appenders {:spit (ig/ref ::timbre/spit)}}
+                    ::timbre/spit   {:fname (str tempfile), :min-level :report}}
+          logger   (::logger/timbre (ig/init config))]
+      (logger/log logger :info ::testing)
+      (logger/log logger :report ::testing)
+      (is (re-matches
+           #"(?x)
+             \d\d-\d\d-\d\d\ \d\d:\d\d:\d\d\ [^\s]+\ 
+             REPORT\ \[duct\.logger\.timbre-test:78\]\ -\ 
+             :duct\.logger\.timbre-test/testing\n"
+           (slurp tempfile))))))

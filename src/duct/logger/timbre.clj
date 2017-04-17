@@ -8,13 +8,16 @@
 
 (defn brief-appender [options]
   (-> (timbre/println-appender options)
-      (assoc :output-fn brief-output-fn)))
+      (assoc :output-fn brief-output-fn)
+      (merge (select-keys options [:min-level]))))
 
 (defmethod ig/init-key ::println [_ options]
-  (timbre/println-appender options))
+  (-> (timbre/println-appender options)
+      (merge (select-keys options [:min-level]))))
 
 (defmethod ig/init-key ::spit [_ options]
-  (timbre/spit-appender options))
+  (-> (timbre/spit-appender options)
+      (merge (select-keys options [:min-level]))))
 
 (defmethod ig/init-key ::brief [_ options]
   (brief-appender options))
