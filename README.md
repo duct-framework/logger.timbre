@@ -34,6 +34,10 @@ development.
 The println and spit appenders are appenders that come with Timbre.
 See the [built-in appenders][] section of the Timbre README.
 
+All the appenders also accept a `:min-level` option, so you can one
+appender that logs everything, and another appender that logs more
+selectively.
+
 A basic configuration that logs messages of "INFO" and above to STDOUT
 looks like this:
 
