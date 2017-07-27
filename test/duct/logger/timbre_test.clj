@@ -22,14 +22,14 @@
                 ::timbre/println {}}
         logger (::logger/timbre (ig/init config))]
     (is (re-matches
-         #"(?x)\d\d-\d\d-\d\d\ \d\d:\d\d:\d\d\ [^\s]+\ 
-           INFO\ \[duct\.logger\.timbre-test:\d\d\]\ -\ 
-           :duct\.logger\.timbre-test/testing\n"
+         #"(?x)\d\d-\d\d-\d\d\ \d\d:\d\d:\d\d\ [^\s]+
+           \ INFO\ \[duct\.logger\.timbre-test:\d\d\]\ -
+           \ :duct\.logger\.timbre-test/testing\n"
          (with-out-str (logger/log logger :info ::testing))))
     (is (re-matches
-         #"(?x)\d\d-\d\d-\d\d\ \d\d:\d\d:\d\d\ [^\s]+\  
-          WARN\ \[duct\.logger\.timbre-test:33\]\ -\ 
-           :duct\.logger\.timbre-test/testing\ \{:foo\ \"bar\"\}\n"
+         #"(?x)\d\d-\d\d-\d\d\ \d\d:\d\d:\d\d\ [^\s]+
+          \ WARN\ \[duct\.logger\.timbre-test:\d\d\]\ -
+          \ :duct\.logger\.timbre-test/testing\ \{:foo\ \"bar\"\}\n"
          (with-out-str (logger/log logger :warn ::testing {:foo "bar"}))))))
 
 (deftest spit-appender-test
@@ -41,13 +41,13 @@
     (logger/log logger :warn ::testing {:foo "bar"})
     (is (re-matches
          #"(?x)
-           \d\d-\d\d-\d\d\ \d\d:\d\d:\d\d\ [^\s]+\ 
-           INFO\ \[duct\.logger\.timbre-test:40\]\ -\ 
-           :duct\.logger\.timbre-test/testing\n
+           \d\d-\d\d-\d\d\ \d\d:\d\d:\d\d\ [^\s]+
+           \ INFO\ \[duct\.logger\.timbre-test:\d\d\]\ -
+           \ :duct\.logger\.timbre-test/testing\n
 
-           \d\d-\d\d-\d\d\ \d\d:\d\d:\d\d\ [^\s]+\ 
-           WARN\ \[duct\.logger\.timbre-test:41\]\ -\ 
-           :duct\.logger\.timbre-test/testing\ \{:foo\ \"bar\"\}\n"
+           \d\d-\d\d-\d\d\ \d\d:\d\d:\d\d\ [^\s]+
+           \ WARN\ \[duct\.logger\.timbre-test:\d\d\]\ -
+           \ :duct\.logger\.timbre-test/testing\ \{:foo\ \"bar\"\}\n"
          (slurp tempfile)))))
 
 (deftest min-level-test
@@ -65,9 +65,9 @@
           logger (::logger/timbre (ig/init config))]
       (is (= (with-out-str (logger/log logger :info ::testing)) ""))
       (is (re-matches
-           #"(?x)\d\d-\d\d-\d\d\ \d\d:\d\d:\d\d\ [^\s]+\ 
-           REPORT\ \[duct\.logger\.timbre-test:71\]\ -\ 
-           :duct\.logger\.timbre-test/testing\n"
+           #"(?x)\d\d-\d\d-\d\d\ \d\d:\d\d:\d\d\ [^\s]+
+           \ REPORT\ \[duct\.logger\.timbre-test:\d\d\]\ -
+           \ :duct\.logger\.timbre-test/testing\n"
            (with-out-str (logger/log logger :report ::testing))))))
 
   (testing "spit appender"
@@ -79,9 +79,9 @@
       (logger/log logger :report ::testing)
       (is (re-matches
            #"(?x)
-             \d\d-\d\d-\d\d\ \d\d:\d\d:\d\d\ [^\s]+\ 
-             REPORT\ \[duct\.logger\.timbre-test:79\]\ -\ 
-             :duct\.logger\.timbre-test/testing\n"
+             \d\d-\d\d-\d\d\ \d\d:\d\d:\d\d\ [^\s]+
+             \ REPORT\ \[duct\.logger\.timbre-test:\d\d\]\ -
+             \ :duct\.logger\.timbre-test/testing\n"
            (slurp tempfile))))))
 
 (deftest restore-root-timbre-config-test
