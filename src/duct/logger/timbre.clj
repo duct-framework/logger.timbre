@@ -39,4 +39,13 @@
                    {:config config, :?ns-str ns-str, :?file file, :?line line}))))
 
 (defmethod ig/init-key :duct.logger/timbre [_ config]
-  (->TimbreLogger config))
+  (let [timbre-logger (->TimbreLogger config)
+        prev-root timbre/*config*]
+    (if (:set-root-binding? config true)
+      (do (timbre/set-config! config)
+          (assoc timbre-logger ::prev-root-config prev-root))
+      timbre-logger)))
+
+(defmethod ig/halt-key! :duct.logger/timbre [_ timbre]
+  (when-let [prev-config (::prev-root-config timbre)]
+    (timbre/set-config! prev-config)))
