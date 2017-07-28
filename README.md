@@ -44,7 +44,7 @@ looks like this:
 ```clojure
 {:duct.logger/timbre
  {:level    :info
-  :appender #ref :duct.logger.timbre/println}
+  :appender #ig/ref :duct.logger.timbre/println}
 
  :duct.logger.timbre/println {}}
 ```
