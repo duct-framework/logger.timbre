@@ -51,12 +51,12 @@
 (defmethod ig/init-key :duct.logger/timbre [_ config]
   (let [timbre-logger (->TimbreLogger config)
         prev-root timbre/*config*]
-    (if (:set-root-binding? config)
+    (if (:set-root-config? config)
       (let [config (update config :middleware (fnil conj []) wrap-legacy-logs)]
         (timbre/set-config! config)
-        (assoc timbre-logger ::prev-root-config prev-root))
+        (assoc timbre-logger :prev-root-config prev-root))
       timbre-logger)))
 
 (defmethod ig/halt-key! :duct.logger/timbre [_ timbre]
-  (when-let [prev-config (::prev-root-config timbre)]
+  (when-let [prev-config (:prev-root-config timbre)]
     (timbre/set-config! prev-config)))

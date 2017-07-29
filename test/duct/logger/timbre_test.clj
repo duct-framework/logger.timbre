@@ -89,7 +89,7 @@
         config {::timbre/brief  {:min-level :report}
                 ::logger/timbre {:level :info
                                  :appenders {:brief (ig/ref ::timbre/brief)}
-                                 :set-root-binding? true}}]
+                                 :set-root-config? true}}]
     (try
       (let [system     (ig/init config)
             log-config (:config (::logger/timbre system))]
