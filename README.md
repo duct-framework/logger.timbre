@@ -14,7 +14,7 @@ To install, add the following to your project `:dependencies`:
 
     [duct/logger.timbre "0.1.1"]
 
-## Usage
+## Basic usage
 
 The Timbre configuration is stored in the `:duct.logger/timbre`
 key. See the [configuration][] section of the Timbre README for full
@@ -57,6 +57,29 @@ to make use of this.
 [configuration]: https://github.com/ptaoussanis/timbre/blob/master/README.md#configuration
 [built-in appenders]: https://github.com/ptaoussanis/timbre/blob/master/README.md#built-in-appenders
 [duct.logger]: https://github.com/duct-framework/logger
+
+## Legacy integration
+
+It's often useful to integrate with existing logging solutions. In
+this case, we can set the `:set-root-config?` option to true:
+
+```clojure
+{:duct.logger/timbre
+ {:set-root-config? true
+  :level            :info
+  :appender         #ig/ref :duct.logger.timbre/println}
+
+ :duct.logger.timbre/println {}}
+```
+
+This will call the global `taoensso.timbre/set-config!` function on
+`init` with the configuration in the key, and restore the previous
+global configuration on `halt!`.
+
+Note that as this changes a global var, only one system can be running
+with this option at any one time. Unless you need to interface with
+legacy global logging systems, it's recommended you keep this option
+off and use the `duct.logger/log` function for logging.
 
 ## License
 
