@@ -1,4 +1,4 @@
-(defproject duct/logger.timbre "0.1.1"
+(defproject duct/logger.timbre "0.2.0"
   :description "Integrant methods for the Timbre logging library"
   :url "https://github.com/duct-framework/logger.timbre"
   :license {:name "Eclipse Public License"
