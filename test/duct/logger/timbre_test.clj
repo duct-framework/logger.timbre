@@ -85,12 +85,23 @@
            (slurp tempfile))))))
 
 (deftest restore-root-timbre-config-test
-  (let [init-binding tao/*config*
-        config {::logger/timbre {:level :info, :appenders {}}}] 
+  (let [prev-log-config tao/*config*
+        config {::logger/timbre {:level :info, :appenders {:brief (ig/ref ::timbre/brief)}}
+                ::timbre/brief  {:min-level :report}}]
     (try
-      (let [system (ig/init config)]
-        (is (= (::logger/timbre config) tao/*config*))
+      (let [system     (ig/init config)
+            log-config (:config (::logger/timbre system))]
+        (is (= (assoc log-config :middleware [timbre/wrap-legacy-logs]) tao/*config*))
+        (is (= (with-out-str
+                 (tao/report ::foo)
+                 (tao/report ::foo {:x 1})
+                 (tao/report "test")
+                 (tao/report "test" 1 2 3))
+               (str ::foo "\n"
+                    ::foo " " {:x 1} "\n"
+                    ::timbre/legacy " " ["test"] "\n"
+                    ::timbre/legacy " " ["test" 1 2 3] "\n")))
         (ig/halt! system)
-        (is (= init-binding tao/*config*)))
+        (is (= prev-log-config tao/*config*)))
       (finally
-        (tao/set-config! init-binding)))))
+        (tao/set-config! prev-log-config)))))

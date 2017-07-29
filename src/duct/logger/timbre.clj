@@ -22,6 +22,16 @@
 (defmethod ig/init-key ::brief [_ options]
   (brief-appender options))
 
+(defn- duct-log-format? [vargs]
+  (and (<= 1 (count vargs) 2)
+       (keyword? (vargs 0))
+       (namespace (vargs 0))))
+
+(defn wrap-legacy-logs [{:keys [vargs] :as data}]
+  (cond-> data
+    (not (duct-log-format? vargs))
+    (assoc :vargs [::legacy vargs])))
+
 (derive :duct.logger/timbre :duct/logger)
 
 (defrecord TimbreLogger [config]
@@ -42,8 +52,9 @@
   (let [timbre-logger (->TimbreLogger config)
         prev-root timbre/*config*]
     (if (:set-root-binding? config true)
-      (do (timbre/set-config! config)
-          (assoc timbre-logger ::prev-root-config prev-root))
+      (let [config (update config :middleware (fnil conj []) wrap-legacy-logs)]
+        (timbre/set-config! config)
+        (assoc timbre-logger ::prev-root-config prev-root))
       timbre-logger)))
 
 (defmethod ig/halt-key! :duct.logger/timbre [_ timbre]
