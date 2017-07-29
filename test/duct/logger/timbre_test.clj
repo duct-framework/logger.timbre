@@ -86,8 +86,10 @@
 
 (deftest restore-root-timbre-config-test
   (let [prev-log-config tao/*config*
-        config {::logger/timbre {:level :info, :appenders {:brief (ig/ref ::timbre/brief)}}
-                ::timbre/brief  {:min-level :report}}]
+        config {::timbre/brief  {:min-level :report}
+                ::logger/timbre {:level :info
+                                 :appenders {:brief (ig/ref ::timbre/brief)}
+                                 :set-root-binding? true}}]
     (try
       (let [system     (ig/init config)
             log-config (:config (::logger/timbre system))]
