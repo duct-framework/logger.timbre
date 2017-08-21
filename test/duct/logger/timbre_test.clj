@@ -1,9 +1,12 @@
 (ns duct.logger.timbre-test
   (:require [clojure.test :refer :all]
+            [duct.core :as duct]
             [duct.logger :as logger]
             [duct.logger.timbre :as timbre]
-            [taoensso.timbre :as tao]
-            [integrant.core :as ig]))
+            [integrant.core :as ig]
+            [taoensso.timbre :as tao]))
+
+(duct/load-hierarchy)
 
 (deftest key-test
   (is (isa? :duct.logger/timbre :duct/logger)))

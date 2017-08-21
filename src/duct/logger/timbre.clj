@@ -32,8 +32,6 @@
     (not (duct-log-format? vargs))
     (assoc :vargs [::legacy vargs])))
 
-(derive :duct.logger/timbre :duct/logger)
-
 (defrecord TimbreLogger [config]
   logger/Logger
   (-log [_ level ns-str file line event data]
