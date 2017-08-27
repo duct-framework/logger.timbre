@@ -100,10 +100,12 @@
         (is (= (with-out-str
                  (tao/report ::foo)
                  (tao/report ::foo {:x 1})
+                 (tao/report ::foo [:x 1])
                  (tao/report "test")
                  (tao/report "test" 1 2 3))
                (str ::foo "\n"
                     ::foo " " {:x 1} "\n"
+                    ::timbre/legacy " " [::foo [:x 1]] "\n"
                     ::timbre/legacy " " ["test"] "\n"
                     ::timbre/legacy " " ["test" 1 2 3] "\n")))
         (ig/halt! system)

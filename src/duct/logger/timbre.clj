@@ -24,8 +24,11 @@
 
 (defn- duct-log-format? [vargs]
   (and (<= 1 (count vargs) 2)
-       (keyword? (vargs 0))
-       (namespace (vargs 0))))
+       (let [[evt data] vargs]
+         (and (keyword?  evt)
+              (namespace evt)
+              (or (nil? data)
+                  (map? data))))))
 
 (defn wrap-legacy-logs [{:keys [vargs] :as data}]
   (cond-> data
