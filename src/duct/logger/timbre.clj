@@ -34,17 +34,18 @@
 
 (defrecord TimbreLogger [config]
   logger/Logger
-  (-log [_ level ns-str file line event data]
+  (-log [_ level ns-str file line id event data]
     (cond
       (instance? Throwable data)
       (timbre/log! level :p (event)
-                   {:config config, :?ns-str ns-str, :?file file, :?line line, :?err data})
+                   {:config config, :?ns-str ns-str, :?file file, :?line line, :id_ id
+                    :?err data})
       (nil? data)
       (timbre/log! level :p (event)
-                   {:config config, :?ns-str ns-str, :?file file, :?line line})
+                   {:config config, :?ns-str ns-str, :?file file, :?line line, :id_ id})
       :else
       (timbre/log! level :p (event data)
-                   {:config config, :?ns-str ns-str, :?file file, :?line line}))))
+                   {:config config, :?ns-str ns-str, :?file file, :?line line, :id_ id}))))
 
 (defmethod ig/init-key :duct.logger/timbre [_ config]
   (let [timbre-logger (->TimbreLogger config)

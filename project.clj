@@ -6,5 +6,5 @@
   :dependencies [[org.clojure/clojure "1.9.0-alpha19"]
                  [com.taoensso/timbre "4.10.0"]
                  [duct/core "0.6.1"]
-                 [duct/logger "0.1.1"]
+                 [duct/logger "0.2.0"]
                  [integrant "0.6.1"]])
