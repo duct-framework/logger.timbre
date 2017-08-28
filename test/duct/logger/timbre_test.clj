@@ -112,3 +112,14 @@
         (is (= prev-log-config tao/*config*)))
       (finally
         (tao/set-config! prev-log-config)))))
+
+(defn test-id-appender [options]
+  (-> (tao/println-appender options)
+      (assoc :output-fn (fn [{:keys [id_]}] (str (force id_))))))
+
+(deftest logging-id-test
+  (let [config {::logger/timbre {:level :info, :appenders {:brief (test-id-appender {})}}}
+        logger (::logger/timbre (ig/init config))]
+    (is (re-matches
+         #"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\n"
+         (with-out-str (logger/log logger :info ::testing))))))

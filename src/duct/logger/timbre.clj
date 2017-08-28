@@ -41,14 +41,16 @@
     (cond
       (instance? Throwable data)
       (timbre/log! level :p (event)
-                   {:config config, :?ns-str ns-str, :?file file, :?line line, :id_ id
-                    :?err data})
+                   {:config config, :?ns-str ns-str, :?file file, :?line line, :?err data
+                    :?base-data {:id_ id}})
       (nil? data)
       (timbre/log! level :p (event)
-                   {:config config, :?ns-str ns-str, :?file file, :?line line, :id_ id})
+                   {:config config, :?ns-str ns-str, :?file file, :?line line
+                    :?base-data {:id_ id}})
       :else
       (timbre/log! level :p (event data)
-                   {:config config, :?ns-str ns-str, :?file file, :?line line, :id_ id}))))
+                   {:config config, :?ns-str ns-str, :?file file, :?line line
+                    :?base-data {:id_ id}}))))
 
 (defmethod ig/init-key :duct.logger/timbre [_ config]
   (let [timbre-logger (->TimbreLogger config)
