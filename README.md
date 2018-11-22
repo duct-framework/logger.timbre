@@ -43,8 +43,8 @@ looks like this:
 
 ```clojure
 {:duct.logger/timbre
- {:level    :info
-  :appender #ig/ref :duct.logger.timbre/println}
+ {:level     :info
+  :appenders {:println #ig/ref :duct.logger.timbre/println}}
 
  :duct.logger.timbre/println {}}
 ```
@@ -67,7 +67,7 @@ this case, we can set the `:set-root-config?` option to true:
 {:duct.logger/timbre
  {:set-root-config? true
   :level            :info
-  :appender         #ig/ref :duct.logger.timbre/println}
+  :appenders        {:println #ig/ref :duct.logger.timbre/println}}
 
  :duct.logger.timbre/println {}}
 ```
